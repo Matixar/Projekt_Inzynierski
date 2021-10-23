@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Wyszukaj przejazd"
+             x:Class="Projekt_Inzynierski.Views.SearchPage">
+    <ContentPage.Content>
+        <StackLayout Padding="15">
+            <Label Text="Skąd" FontSize="Medium" />
+            <Entry Text="{Binding Departure, Mode=TwoWay}" FontSize="Medium" />
+            <Label Text="Dokąd" FontSize="Medium" />
+            <Entry Text="{Binding Destination, Mode=TwoWay}" FontSize="Medium" />
+            <Button  ImageSource="search_icon.png" Command="{Binding SearchCommand}" HorizontalOptions="FillAndExpand"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

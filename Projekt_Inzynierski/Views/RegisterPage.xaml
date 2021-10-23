@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Projekt_Inzynierski.Views.RegisterPage">
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <Label Text="Rejestracja" FontSize="Title" FontAttributes="Bold" HorizontalTextAlignment="Center" Padding="20"/>
+            <Label Text="Email" FontSize="Medium"/>
+            <Entry />
+            <Label Text="Hasło" FontSize="Medium" />
+            <Entry IsPassword="True"/>
+            <Label Text="Powtórz hasło" FontSize="Medium" />
+            <Entry IsPassword="True"/>
+            <Button Text="Zarejestruj się" Clicked="Button_Clicked" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
