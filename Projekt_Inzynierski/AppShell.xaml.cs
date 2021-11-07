@@ -20,5 +20,10 @@ namespace Projekt_Inzynierski
         {
             await Shell.Current.GoToAsync("//LoginPage");
         }
+
+        private async void OnAboutItemClicked(object sender, EventArgs e)
+        {
+            await DisplayAlert("O aplikacji","Aplikacja mobilna do organizacji wspólnych przejazdów. Projekt inżynierski.\n\n@Sylwester Kot, 2021","Anuluj");
+        }
     }
 }

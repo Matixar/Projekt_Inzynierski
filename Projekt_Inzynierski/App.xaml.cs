@@ -12,7 +12,6 @@ namespace Projekt_Inzynierski
         public App()
         {
             InitializeComponent();
-
             DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
         }

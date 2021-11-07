@@ -26,7 +26,6 @@
             </Style>
             <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
             <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
-
             <!--
             Default Styles for all Flyout Items
             https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#flyoutitem-and-menuitem-style-classes
@@ -42,6 +41,7 @@
                                 <VisualState.Setters>
                                     <Setter Property="BackgroundColor" Value="{x:OnPlatform UWP=Transparent, iOS=White}" />
                                     <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource Primary}" />
+                                    <Setter TargetName="FlyoutItemLabel" Property="Label.FontAttributes" Value="Bold" />
                                 </VisualState.Setters>
                             </VisualState>
                             <VisualState x:Name="Selected">
@@ -49,6 +49,7 @@
                                     <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
                                 </VisualState.Setters>
                             </VisualState>
+                            
                         </VisualStateGroup>
                     </VisualStateGroupList>
                 </Setter>
@@ -64,6 +65,7 @@
                             <VisualState x:Name="Normal">
                                 <VisualState.Setters>
                                     <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource Primary}" />
+                                    <Setter TargetName="FlyoutItemLabel" Property="Label.FontAttributes" Value="Bold" />
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
@@ -72,6 +74,53 @@
             </Style>
         </ResourceDictionary>
     </Shell.Resources>
+
+    <!-- Template each FlyoutItem -->
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="0.8*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="*"/>
+                    
+                </Grid.RowDefinitions>
+                <Image Grid.Row="1" Grid.Column="0" Source="{Binding Icon}"
+                   Margin="5"/>
+                <Label Grid.Row="1" Grid.Column="1"
+                   Text="{Binding Title}" TextColor="{StaticResource Primary}"
+                   FontAttributes="Bold"
+                   VerticalTextAlignment="Center"
+                   FontSize="Medium"/>
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
+    <!-- Template each MenuItem -->
+    <Shell.MenuItemTemplate>
+        <DataTemplate>
+            <Grid HeightRequest="80">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="0.8*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+                <Image Grid.Row="1" Grid.Column="0" Source="{Binding Icon}"
+                   Margin="5"/>
+                <Label Grid.Row="1" Grid.Column="1"
+                   Text="{Binding Text}"
+                   FontAttributes="Italic"
+                   VerticalTextAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.MenuItemTemplate>
 
     <TabBar>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
@@ -85,7 +134,7 @@
     <FlyoutItem Title="Strona główna" Icon="home_icon_toolbar.png">
         <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
     </FlyoutItem>
-    <FlyoutItem Title="Szukaj trasy" Icon="search_icon.png">
+    <FlyoutItem Title="Szukaj trasy" Icon="search_icon_black.png">
         <ShellContent Route="SearchPage" ContentTemplate="{DataTemplate local:SearchPage}" />
     </FlyoutItem>
     <FlyoutItem Title="Pasażer" Icon="icon_person.png">
@@ -105,6 +154,9 @@
     </FlyoutItem>
 
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->
+    <MenuItem Text="O aplikacji" StyleClass="MenuItemLayoutStyle" Clicked="OnAboutItemClicked" Icon="icon_about.png">
+    </MenuItem>
+    
     <MenuItem Text="Wyloguj się" StyleClass="MenuItemLayoutStyle" Clicked="OnMenuItemClicked">
     </MenuItem>
 

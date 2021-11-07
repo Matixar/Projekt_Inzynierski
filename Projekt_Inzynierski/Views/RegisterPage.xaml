@@ -1,17 +1,55 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit" 
+             xmlns:validators="clr-namespace:Projekt_Inzynierski.Validators"
              x:Class="Projekt_Inzynierski.Views.RegisterPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
+            <Style TargetType="Entry" x:Key="invalidInput">
+                <Setter Property="TextColor" Value="Red"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout Padding="10">
-            <Label Text="Rejestracja" FontSize="Title" FontAttributes="Bold" HorizontalTextAlignment="Center" Padding="20"/>
-            <Label Text="Email" FontSize="Medium"/>
-            <Entry />
-            <Label Text="Hasło" FontSize="Medium" />
-            <Entry IsPassword="True"/>
-            <Label Text="Powtórz hasło" FontSize="Medium" />
-            <Entry IsPassword="True"/>
-            <Button Text="Zarejestruj się" Clicked="Button_Clicked" />
-        </StackLayout>
+        <ScrollView>
+            <StackLayout Padding="10">
+
+                <Label Text="Rejestracja" FontSize="Title" FontAttributes="Bold" HorizontalTextAlignment="Center" Padding="20"/>
+                <Label Text="Imię" FontSize="Medium"/>
+                <Entry x:Name="EntryName" Text="{Binding Name}">
+                    <Entry.Behaviors>
+                        <xct:TextValidationBehavior Flags="ValidateOnUnfocusing" RegexPattern="^[A-Z].*" InvalidStyle="{StaticResource invalidInput}" MinimumLength="1" IsValid="{Binding NameValid}"/>
+                    </Entry.Behaviors>
+                </Entry>
+                <Label x:Name="LabelValidName" Text="Nieprawidłowe imię" FontSize="Small" TextColor="Red" IsVisible="{Binding NameValid, Converter={StaticResource InvertedBoolConverter}}"/>
+                <Label Text="Nazwisko" FontSize="Medium"/>
+                <Entry x:Name="EntrySurname" Text="{Binding Surname}">
+                    <Entry.Behaviors>
+                        <xct:TextValidationBehavior Flags="ValidateOnUnfocusing" RegexPattern="^[A-Z].*" InvalidStyle="{StaticResource invalidInput}" MinimumLength="1" IsValid="{Binding SurnameValid}"/>
+                    </Entry.Behaviors>
+                </Entry>
+                <Label x:Name="LabelValidSurname" Text="Nieprawidłowe nazwisko" FontSize="Small" TextColor="Red" IsVisible="{Binding SurnameValid, Converter={StaticResource InvertedBoolConverter}}"/>
+                <Label Text="Email" FontSize="Medium"/>
+                <Entry x:Name="EntryEmail" Text="{Binding Email}" Keyboard="Email">
+                    <Entry.Behaviors>
+                        <xct:EmailValidationBehavior x:Name="emailValidation" Flags="ValidateOnUnfocusing" IsValid="{Binding EmailValid}" InvalidStyle="{StaticResource invalidInput}"/>
+                    </Entry.Behaviors>
+                </Entry>
+                <Label x:Name="LabelValidEmail" Text="Nieprawidłowy email" FontSize="Small" TextColor="Red" IsVisible="{Binding EmailValid, Converter={StaticResource InvertedBoolConverter}}"/>
+                <Label Text="Hasło" FontSize="Medium" />
+                <Entry x:Name="EntryPassword" IsPassword="True">
+                    <Entry.Behaviors>
+                        <xct:CharactersValidationBehavior x:Name="passwordValidation" Flags="ValidateOnValueChanging,ValidateOnAttaching" MinimumCharacterCount="4" IsValid="{Binding PasswordEmptyValid}"/>
+                    </Entry.Behaviors>
+                </Entry>
+                <Label x:Name="LabelValidPassword" Text="Hasło musi mieć przynajmniej 4 znaki" FontSize="Small" TextColor="Red" IsVisible="{Binding PasswordEmptyValid, Converter={StaticResource InvertedBoolConverter}}"/>
+                <Label Text="Powtórz hasło" FontSize="Medium" />
+                <Entry x:Name="EntryRepeatPassword" IsPassword="True" IsEnabled="{Binding PasswordEmptyValid}" >
+                </Entry>
+                <Button Text="Zarejestruj się" Clicked="Button_Clicked" IsVisible="{Binding PasswordEmptyValid} "/>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

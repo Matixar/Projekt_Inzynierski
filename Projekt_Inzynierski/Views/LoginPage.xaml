@@ -15,7 +15,7 @@
                 <Label Text="Hasło" FontSize="Medium"/>
                 <Entry IsPassword="True"/>
                 <Button VerticalOptions="Center" Text="Zaloguj się" Command="{Binding LoginCommand}" BackgroundColor="IndianRed" />
-                <Label VerticalOptions="Center" Text="Nie masz jeszcze konta?" HorizontalTextAlignment="Center" Margin="0,20,0,0" FontSize="Medium"/>
+                <Label VerticalOptions="Center" Text="Nie masz jeszcze konta?" HorizontalTextAlignment="Center" Margin="0,20,0,0" FontSize="Medium" FontAttributes="Bold,Italic"/>
                 <Button VerticalOptions="Center" Text="Zarejestruj się" Clicked="RegisterButtonClicked"  Margin="0,0,0,20" />
             </StackLayout>
         </ScrollView>

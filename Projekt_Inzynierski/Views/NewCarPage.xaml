@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Projekt_Inzynierski.Views.NewCarPage">
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <Label Text="Marka pojazdu"/>
+            <Entry Text="{Binding Mark}"/>
+            <Label Text="Model pojazdu" />
+            <Entry Text="{Binding Model}"/>
+            <Label Text="Nr rejestracyjny" />
+            <Entry Text="{Binding Plate}"/>
+            <Label Text="Kolor" />
+            <Entry Text="{Binding Color}"/>
+            <Label Text="Liczba miejsc" />
+            <Entry Text="{Binding Seats}"/>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Anuluj" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Dodaj pojazd" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
