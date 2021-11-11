@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Projekt_Inzynierski.Models
 {
-    class Car
+    public class Car
     {
+        public string Id { get; set; }
         public string Brand { get; set; }
 
         public string Model { get; set; }

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:Projekt_Inzynierski.ViewModels" x:DataType="viewmodels:TripDetailViewModel"
+             x:Class="Projekt_Inzynierski.Views.TripDetailPage"
+             Title="Szczegóły przejazdu">
+    <ScrollView>
+        <StackLayout Spacing="20" Padding="15">
+        
+        <Label Text="Miejsce początkowe:" FontSize="Medium" />
+        <Label Text="{Binding DeparturePlace}" FontSize="Small"/>
+        <Label Text="Miejsce docelowe:" FontSize="Medium" />
+        <Label Text="{Binding DestinationPlace}" FontSize="Small"/>
+        <Label Text="Data odjazdu:" FontSize="Medium" />
+        <Label Text="{Binding DepartureTime}" FontSize="Small"/>
+        <Label Text="Data przyjazdu:" FontSize="Medium" />
+        <Label Text="{Binding DestinationTime}" FontSize="Small"/>
+        <Label Text="Kierowca:" FontSize="Medium" />
+        <Label Text="{Binding Driver}" FontSize="Small"/>
+        <Label Text="Pasażerowie:" FontSize="Medium" />
+        <Label Text="{Binding Passengers}" FontSize="Small"/>
+        <Label Text="Samochód:" FontSize="Medium" />
+        <Label Text="{Binding Car}" FontSize="Small"/>
+        <Label Text="Wolne miejsca:" FontSize="Medium" />
+        <Label Text="{Binding AvalibleSeats}" FontSize="Small"/>
+        <Label Text="Długość trasy:" FontSize="Medium" />
+        <Label Text="{Binding Distance}" FontSize="Small"/>
+        <Label Text="Cena przejazdu:" FontSize="Medium" />
+        <Label Text="{Binding TripPrice}" FontSize="Small"/>
+    </StackLayout>
+    </ScrollView>
+</ContentPage>

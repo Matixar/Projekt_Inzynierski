@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Projekt_Inzynierski.Models
 {
-    class Trip
+    public class Trip
     {
+        public string Id { get; set; }
         public string DeparturePlace { get; set; }
 
         public string DestinationPlace { get; set; }
@@ -14,7 +15,7 @@ namespace Projekt_Inzynierski.Models
 
         public List<User> Passengers { get; set; }
 
-        public DateTime DepartureDate { get; set; }
+        public DateTime DepartureTime { get; set; }
 
         public DateTime DestinationTime { get; set; }
 

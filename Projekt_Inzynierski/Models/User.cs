@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Projekt_Inzynierski.Models
 {
-    class User
+    public class User
     {
         public string Email { get; set; }
 

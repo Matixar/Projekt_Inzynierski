@@ -11,6 +11,8 @@ namespace Projekt_Inzynierski.ViewModels
     public class BaseViewModel : INotifyPropertyChanged
     {
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        public IDataStore<Trip> DataStoreTrip => DependencyService.Get<IDataStore<Trip>>();
+        
 
         bool isBusy = false;
         public bool IsBusy

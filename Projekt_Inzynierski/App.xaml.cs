@@ -13,6 +13,7 @@ namespace Projekt_Inzynierski
         {
             InitializeComponent();
             DependencyService.Register<MockDataStore>();
+            DependencyService.Register<MockDataTrips>();
             MainPage = new AppShell();
         }
 

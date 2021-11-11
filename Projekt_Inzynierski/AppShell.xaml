@@ -138,10 +138,10 @@
         <ShellContent Route="SearchPage" ContentTemplate="{DataTemplate local:SearchPage}" />
     </FlyoutItem>
     <FlyoutItem Title="Pasażer" Icon="icon_person.png">
-        <ShellContent Route="ItemsPage" ContentTemplate="{DataTemplate local:ItemsPage}" />
+        <ShellContent Route="MyTripsPage" ContentTemplate="{DataTemplate local:MyTripsPage}" />
     </FlyoutItem>
     <FlyoutItem Title="Kierowca" Icon="icon_driver.png">
-        <ShellContent Route="ItemsPage" ContentTemplate="{DataTemplate local:ItemsPage}" />
+        <ShellContent Route="MyTripsPage" ContentTemplate="{DataTemplate local:MyTripsPage}" />
     </FlyoutItem>
     <FlyoutItem Title="Moje pojazdy" Icon="icon_car.png">
         <ShellContent Route="ItemsPage" ContentTemplate="{DataTemplate local:ItemsPage}" />
