@@ -22,5 +22,9 @@ namespace Projekt_Inzynierski.Views
         {
             await Shell.Current.GoToAsync(nameof(RegisterPage));
         }
+        public async Task showMessageAsync(string message)
+        {
+            await DisplayAlert("Błąd", message, "OK");
+        }
     }
 }

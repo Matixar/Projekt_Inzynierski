@@ -9,7 +9,7 @@
             <Entry Text="{Binding Departure, Mode=TwoWay}" FontSize="Medium" />
             <Label Text="Dokąd" FontSize="Medium" />
             <Entry Text="{Binding Destination, Mode=TwoWay}" FontSize="Medium" />
-            <Button  ImageSource="search_icon.png" Command="{Binding SearchCommand}" HorizontalOptions="FillAndExpand"/>
+            <Button  ImageSource="search_icon.png" Command="{Binding SearchCommand}" HorizontalOptions="FillAndExpand" Clicked="Button_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -15,6 +15,7 @@ namespace Projekt_Inzynierski
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
             Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
             Routing.RegisterRoute(nameof(TripDetailPage), typeof(TripDetailPage));
+            Routing.RegisterRoute(nameof(UserPage), typeof(UserPage));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

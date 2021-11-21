@@ -6,6 +6,9 @@ namespace Projekt_Inzynierski.ViewModels
 {
     class RegisterViewModel : BaseViewModel
     {
+        private string email;
+        private string password;
+
         private bool emailValid;
         private bool passwordEmptyValid;
         private bool nameValid;
@@ -47,5 +50,8 @@ namespace Projekt_Inzynierski.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public string Email { get => email; set => SetProperty(ref email, value); }
+        public string Password { get => password; set => SetProperty(ref password, value); }
     }
 }

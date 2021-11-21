@@ -1,4 +1,5 @@
-﻿using Projekt_Inzynierski.Models;
+﻿using OpenApiService;
+using Projekt_Inzynierski.Models;
 using Projekt_Inzynierski.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,19 @@ namespace Projekt_Inzynierski.Views
                 !LabelValidSurname.IsVisible && EntrySurname.Text != null &&
                 !LabelValidPassword.IsVisible)
             {
-                await Shell.Current.GoToAsync("//LoginPage");
+                var client = new OpenApiService.OpenApiService("https://travelapp-api.azurewebsites.net/", new System.Net.Http.HttpClient());
+                var register = new RegisterDto();
+                register.Email = EntryEmail.Text;
+                register.Password = EntryPassword.Text;
+                try
+                {
+                    var result = await client.RegisterAsync(register);
+                    await Shell.Current.GoToAsync("//LoginPage");
+                }
+                catch(ApiException error)
+                {
+                    await DisplayAlert("Błąd", error.Response, "OK");
+                }
             }
             else
             {

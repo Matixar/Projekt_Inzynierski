@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Projekt_Inzynierski.Views.UserPage">
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <Label Text="Dane użytkownika" FontSize="Title" FontAttributes="Bold" HorizontalOptions="Center"/>
+            <Label Text="Imię" FontSize="Medium"/>
+            <Entry IsEnabled="False" x:Name="EntryName" Text="{Binding Name}" />
+            <Label Text="Data urodzin" FontSize="Medium" />
+            <DatePicker IsEnabled="False"  x:Name="EntryDateOfBirth" Date="{Binding DateOfBirth}" />
+            <Label Text="Płeć" FontSize="Medium" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Label Text="Mężczyzna" FontSize="Medium"/>
+                <Switch IsEnabled="False"  x:Name="SwitchGender" Grid.Column="1" />
+                <Label Grid.Column="2" Text="Kobieta" FontSize="Medium" />
+            </Grid>
+            <Label Text="Opis" FontSize="Medium"/>
+            <Entry IsEnabled="False"  x:Name="EntryDescription" />
+            <Label Text="Awatar" FontSize="Medium"/>
+            <Entry IsEnabled="False"  x:Name="EntryAvatar"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button x:Name="ButtonEdit" Text="Edytuj" Clicked="EditButton_Clicked"/>
+                <Button x:Name="ButtonSave" IsVisible="False" Text="Zapisz"/>
+                <Button x:Name="ButtonCancel" IsVisible="False" Grid.Column="1" Text="Anuluj" Clicked="CancelButton_Clicked"/>
+            </Grid>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

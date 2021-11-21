@@ -18,5 +18,15 @@ namespace Projekt_Inzynierski.Views
             InitializeComponent();
             this.BindingContext = new SearchViewModel();
         }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            var client = new OpenApiService.OpenApiService("https://travelapp-api.azurewebsites.net/", new System.Net.Http.HttpClient());
+            var user = client.UsersAllAsync().Result.First();
+            
+            DisplayAlert("test", user.Email, "OK");
+            
+            
+        }
     }
 }

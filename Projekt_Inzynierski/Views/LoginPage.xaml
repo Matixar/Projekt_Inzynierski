@@ -11,9 +11,9 @@
             <StackLayout Padding="10,0,10,0" VerticalOptions="Center" Orientation="Vertical" >
                 <Image Source="https://miro.medium.com/max/1400/1*9rekSG0iNILkRxqsOV1ngQ.jpeg" HeightRequest="{OnPlatform Android=225}"  />
                 <Label Text="Email" FontSize="Medium"/>
-                <Entry  />
+                <Entry x:Name="EntryEmail" Text="{Binding Email}"/>
                 <Label Text="Hasło" FontSize="Medium"/>
-                <Entry IsPassword="True"/>
+                <Entry x:Name="EntryPassword" IsPassword="True" Text="{Binding Password}"/>
                 <Button VerticalOptions="Center" Text="Zaloguj się" Command="{Binding LoginCommand}" BackgroundColor="IndianRed" />
                 <Label VerticalOptions="Center" Text="Nie masz jeszcze konta?" HorizontalTextAlignment="Center" Margin="0,20,0,0" FontSize="Medium" FontAttributes="Bold,Italic"/>
                 <Button VerticalOptions="Center" Text="Zarejestruj się" Clicked="RegisterButtonClicked"  Margin="0,0,0,20" />
