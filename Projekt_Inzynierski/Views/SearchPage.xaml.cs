@@ -19,12 +19,17 @@ namespace Projekt_Inzynierski.Views
             this.BindingContext = new SearchViewModel();
         }
 
+        protected override bool OnBackButtonPressed()
+        {
+            Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
+            return true;
+        }
+
         private void Button_Clicked(object sender, EventArgs e)
         {
-            var client = new OpenApiService.OpenApiService("https://travelapp-api.azurewebsites.net/", new System.Net.Http.HttpClient());
-            var user = client.UsersAllAsync().Result.First();
+            var client = new OpenApiService.OpenApiService("https://travelapi-app.azurewebsites.net/", new System.Net.Http.HttpClient());
             
-            DisplayAlert("test", user.Email, "OK");
+            
             
             
         }

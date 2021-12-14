@@ -12,20 +12,22 @@ namespace Projekt_Inzynierski.ViewModels
 {
     public class TripsViewModel : BaseViewModel
     {
-        private Trip _selectedItem;
 
-        public ObservableCollection<Trip> Items { get; }
+        private OpenApiService.TripInfoDto _selectedItem;
+
+        public ObservableCollection<OpenApiService.TripInfoDto> Items { get; }
+
+        public Command<OpenApiService.TripInfoDto> ItemTapped { get; }
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
-        public Command<Trip> ItemTapped { get; }
 
         public TripsViewModel()
         {
             Title = "Przejazdy";
-            Items = new ObservableCollection<Trip>();
+            Items = new ObservableCollection<OpenApiService.TripInfoDto>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-            ItemTapped = new Command<Trip>(OnItemSelected);
+            ItemTapped = new Command<OpenApiService.TripInfoDto>(OnItemSelected);
 
             AddItemCommand = new Command(OnAddItem);
         }
@@ -37,15 +39,23 @@ namespace Projekt_Inzynierski.ViewModels
             try
             {
                 Items.Clear();
-                var items = await DataStoreTrip.GetItemsAsync(true);
-                foreach (var item in items)
+                System.Net.Http.HttpClient _client = new System.Net.Http.HttpClient();
+                var authHeaderValue = await Xamarin.Essentials.SecureStorage.GetAsync("token");
+                _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authHeaderValue);
+                var client = new OpenApiService.OpenApiService("https://travelapi-app.azurewebsites.net/", _client);
+                var trips = client.TripsAllAsync().Result;
+                foreach (var item in trips)
                 {
                     Items.Add(item);
                 }
             }
-            catch (Exception ex)
+            catch (OpenApiService.ApiException e)
             {
-                Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Błąd", e.Response, "OK");
+            }
+            catch(AggregateException e)
+            {
+                await Shell.Current.DisplayAlert("Błąd", e.Message, "OK");
             }
             finally
             {
@@ -59,7 +69,7 @@ namespace Projekt_Inzynierski.ViewModels
             SelectedItem = null;
         }
 
-        public Trip SelectedItem
+        public OpenApiService.TripInfoDto SelectedItem
         {
             get => _selectedItem;
             set
@@ -71,14 +81,14 @@ namespace Projekt_Inzynierski.ViewModels
 
         private async void OnAddItem(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(NewItemPage));
+            await Shell.Current.GoToAsync(nameof(NewRidePage));
         }
 
-        async void OnItemSelected(Trip item)
+        async void OnItemSelected(OpenApiService.TripInfoDto item)
         {
             if (item == null)
                 return;
-            // This will push the ItemDetailPage onto the navigation stack
+
             await Shell.Current.GoToAsync($"{nameof(TripDetailPage)}?{nameof(TripDetailViewModel.ItemId)}={item.Id}");
         }
     }

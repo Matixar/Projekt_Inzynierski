@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:Projekt_Inzynierski.ViewModels" x:DataType="viewmodels:AddOpinionViewModel"
+             x:Class="Projekt_Inzynierski.Views.AddOpinion"
+             Title="Dodaj opinię"
+             >
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <Label Text="Ocena"/>
+            <StackLayout Orientation="Horizontal" RadioButtonGroup.GroupName="Rate" RadioButtonGroup.SelectedValue="{Binding Selection}" >
+                <RadioButton Content="1" Value="1" />
+                <RadioButton Content="2" Value="2" />
+                <RadioButton Content="3" Value="3"/>
+                <RadioButton Content="4" Value="4"/>
+                <RadioButton Content="5" Value="5"/>
+            </StackLayout>
+            <Label Text="Komentarz" />
+            <Editor Text="{Binding Description}" AutoSize="TextChanges"/>
+            <Button Text="Dodaj" Command="{Binding AddOpinionCommand}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

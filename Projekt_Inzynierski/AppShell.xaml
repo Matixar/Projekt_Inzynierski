@@ -137,17 +137,14 @@
     <FlyoutItem Title="Szukaj trasy" Icon="search_icon_black.png">
         <ShellContent Route="SearchPage" ContentTemplate="{DataTemplate local:SearchPage}" />
     </FlyoutItem>
-    <FlyoutItem Title="Pasażer" Icon="icon_person.png">
-        <ShellContent Route="MyTripsPage" ContentTemplate="{DataTemplate local:MyTripsPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Kierowca" Icon="icon_driver.png">
+    <FlyoutItem Title="Moje przejazdy" Icon="icon_driver.png">
         <ShellContent Route="MyTripsPage" ContentTemplate="{DataTemplate local:MyTripsPage}" />
     </FlyoutItem>
     <FlyoutItem Title="Moje pojazdy" Icon="icon_car.png">
-        <ShellContent Route="ItemsPage" ContentTemplate="{DataTemplate local:ItemsPage}" />
+        <ShellContent Route="ItemsPage" ContentTemplate="{DataTemplate local:MyCarsPage}" />
     </FlyoutItem>
     <FlyoutItem Title="Znajomi" Icon="icon_person.png">
-        <ShellContent Route="ItemsPage" ContentTemplate="{DataTemplate local:ItemsPage}" />
+        <ShellContent Route="FriendlistPage" ContentTemplate="{DataTemplate local:FriendlistPage}" />
     </FlyoutItem>
     <FlyoutItem Title="Dane osobowe" Icon="icon_feed.png">
         <ShellContent Route="UserPage" ContentTemplate="{DataTemplate local:UserPage}" />

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Projekt_Inzynierski.Views.UserDetailsPage"
+             Title="Szczegóły Użytkownika"
+             xmlns:viewmodels="clr-namespace:Projekt_Inzynierski.ViewModels"
+             x:DataType="viewmodels:UserDetailsViewModel">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Spacing="20" Padding="15">
+                <Label Text="Imię" FontSize="Medium"/>
+                <Label Text="{Binding User.Name}" />
+                <Label Text="Płeć" FontSize="Medium"/>
+                <Label Text="{Binding User.Gender}" />
+                <Label Text="Opis" FontSize="Medium"/>
+                <Label Text="{Binding User.Description}" />
+                <Label Text="Opinie" FontSize="Medium"/>
+                <ListView ItemsSource="{Binding User.Opinions}" HeightRequest="150">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell>
+                                <TextCell.Text>
+                                    <MultiBinding StringFormat="Od: {0} : ( {1} ) \n {2} \n {3}">
+                                        <Binding Path="SenderId" />
+                                        <Binding Path="OpinionValue" />
+                                        <Binding Path="Date" />
+                                        <Binding Path="OpinionDescription" />
+                                    </MultiBinding>
+                                </TextCell.Text>
+                            </TextCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Text="Dodaj opinię" Command="{Binding AddOpinionCommand}" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

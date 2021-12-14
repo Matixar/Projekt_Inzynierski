@@ -22,6 +22,11 @@ namespace Projekt_Inzynierski.Views
             BindingContext = _viewModel = new TripsViewModel();
         }
 
+        protected override bool OnBackButtonPressed()
+        {
+            Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
+            return true;
+        }
         protected override void OnAppearing()
         {
             base.OnAppearing();

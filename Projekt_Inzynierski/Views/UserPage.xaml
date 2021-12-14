@@ -1,14 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:Projekt_Inzynierski.ViewModels" x:DataType="viewmodels:UserViewModel"
              x:Class="Projekt_Inzynierski.Views.UserPage">
+
     <ContentPage.Content>
         <StackLayout Padding="10">
             <Label Text="Dane użytkownika" FontSize="Title" FontAttributes="Bold" HorizontalOptions="Center"/>
             <Label Text="Imię" FontSize="Medium"/>
             <Entry IsEnabled="False" x:Name="EntryName" Text="{Binding Name}" />
-            <Label Text="Data urodzin" FontSize="Medium" />
-            <DatePicker IsEnabled="False"  x:Name="EntryDateOfBirth" Date="{Binding DateOfBirth}" />
             <Label Text="Płeć" FontSize="Medium" />
             <Grid>
                 <Grid.RowDefinitions>
@@ -20,13 +19,11 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Label Text="Mężczyzna" FontSize="Medium"/>
-                <Switch IsEnabled="False"  x:Name="SwitchGender" Grid.Column="1" />
+                <Switch IsEnabled="False" IsToggled="{Binding Gender}"  x:Name="SwitchGender" Grid.Column="1" />
                 <Label Grid.Column="2" Text="Kobieta" FontSize="Medium" />
             </Grid>
             <Label Text="Opis" FontSize="Medium"/>
-            <Entry IsEnabled="False"  x:Name="EntryDescription" />
-            <Label Text="Awatar" FontSize="Medium"/>
-            <Entry IsEnabled="False"  x:Name="EntryAvatar"/>
+            <Entry IsEnabled="False" Text="{Binding Description}" x:Name="EntryDescription" />
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -36,8 +33,8 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Button x:Name="ButtonEdit" Text="Edytuj" Clicked="EditButton_Clicked"/>
-                <Button x:Name="ButtonSave" IsVisible="False" Text="Zapisz"/>
-                <Button x:Name="ButtonCancel" IsVisible="False" Grid.Column="1" Text="Anuluj" Clicked="CancelButton_Clicked"/>
+                <Button x:Name="ButtonSave" IsVisible="False" Text="Zapisz" Command="{Binding SaveChangesCommand}"/>
+                <Button x:Name="ButtonCancel" IsVisible="False" Grid.Column="1" Text="Anuluj" Clicked="CancelButton_Clicked"  Command="{Binding CancelChangesCommand}"/>
             </Grid>
 
         </StackLayout>

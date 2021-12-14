@@ -24,13 +24,6 @@
                     </Entry.Behaviors>
                 </Entry>
                 <Label x:Name="LabelValidName" Text="Nieprawidłowe imię" FontSize="Small" TextColor="Red" IsVisible="{Binding NameValid, Converter={StaticResource InvertedBoolConverter}}"/>
-                <Label Text="Nazwisko" FontSize="Medium"/>
-                <Entry x:Name="EntrySurname" Text="{Binding Surname}">
-                    <Entry.Behaviors>
-                        <xct:TextValidationBehavior Flags="ValidateOnUnfocusing" RegexPattern="^[A-Z].*" InvalidStyle="{StaticResource invalidInput}" MinimumLength="1" IsValid="{Binding SurnameValid}"/>
-                    </Entry.Behaviors>
-                </Entry>
-                <Label x:Name="LabelValidSurname" Text="Nieprawidłowe nazwisko" FontSize="Small" TextColor="Red" IsVisible="{Binding SurnameValid, Converter={StaticResource InvertedBoolConverter}}"/>
                 <Label Text="Email" FontSize="Medium"/>
                 <Entry x:Name="EntryEmail" Text="{Binding Email}" Keyboard="Email">
                     <Entry.Behaviors>
@@ -41,10 +34,10 @@
                 <Label Text="Hasło" FontSize="Medium" />
                 <Entry x:Name="EntryPassword" IsPassword="True">
                     <Entry.Behaviors>
-                        <xct:CharactersValidationBehavior x:Name="passwordValidation" Flags="ValidateOnValueChanging,ValidateOnAttaching" MinimumCharacterCount="4" IsValid="{Binding PasswordEmptyValid}"/>
+                        <xct:CharactersValidationBehavior x:Name="passwordValidation" Flags="ValidateOnValueChanging,ValidateOnAttaching" MinimumCharacterCount="6" IsValid="{Binding PasswordEmptyValid}"/>
                     </Entry.Behaviors>
                 </Entry>
-                <Label x:Name="LabelValidPassword" Text="Hasło musi mieć przynajmniej 4 znaki" FontSize="Small" TextColor="Red" IsVisible="{Binding PasswordEmptyValid, Converter={StaticResource InvertedBoolConverter}}"/>
+                <Label x:Name="LabelValidPassword" Text="Hasło musi mieć przynajmniej 6 znaków" FontSize="Small" TextColor="Red" IsVisible="{Binding PasswordEmptyValid, Converter={StaticResource InvertedBoolConverter}}"/>
                 <Label Text="Powtórz hasło" FontSize="Medium" />
                 <Entry x:Name="EntryRepeatPassword" IsPassword="True" IsEnabled="{Binding PasswordEmptyValid}" >
                 </Entry>

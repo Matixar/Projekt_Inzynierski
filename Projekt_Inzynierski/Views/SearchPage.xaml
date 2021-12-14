@@ -1,15 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:Projekt_Inzynierski.ViewModels" 
+             xmlns:model="clr-namespace:OpenApiService"
              Title="Wyszukaj przejazd"
-             x:Class="Projekt_Inzynierski.Views.SearchPage">
+             x:Class="Projekt_Inzynierski.Views.SearchPage"
+             x:DataType="local:SearchViewModel"
+             >
     <ContentPage.Content>
-        <StackLayout Padding="15">
-            <Label Text="Skąd" FontSize="Medium" />
-            <Entry Text="{Binding Departure, Mode=TwoWay}" FontSize="Medium" />
-            <Label Text="Dokąd" FontSize="Medium" />
-            <Entry Text="{Binding Destination, Mode=TwoWay}" FontSize="Medium" />
-            <Button  ImageSource="search_icon.png" Command="{Binding SearchCommand}" HorizontalOptions="FillAndExpand" Clicked="Button_Clicked"/>
-        </StackLayout>
+        <ScrollView>
+            <StackLayout Padding="15">
+                <Label Text="Skąd" FontSize="Medium" />
+                <Entry Text="{Binding StartFrom, Mode=TwoWay}" FontSize="Medium" />
+                <Label Text="Dokąd" FontSize="Medium" />
+                <Entry Text="{Binding EndIn, Mode=TwoWay}" FontSize="Medium" />
+                <Label Text="Data" FontSize="Medium"/>
+                <DatePicker Date="{Binding StartTime}" />
+                <Button  ImageSource="search_icon.png" Command="{Binding SearchCommand}" HorizontalOptions="FillAndExpand" />
+                <CollectionView x:Name="TripsListView"
+                ItemsSource="{Binding Items}"
+                SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="10" x:DataType="model:TripInfoDto">
+                                <Label 
+                            LineBreakMode="NoWrap" 
+                            Style="{DynamicResource ListItemTextStyle}" 
+                            FontSize="16" >
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="Z {0} do {1}">
+                                            <Binding Path="StartFrom" />
+                                            <Binding Path="EndIn" />
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                                <Label  
+                            LineBreakMode="NoWrap"
+                            Style="{DynamicResource ListItemDetailTextStyle}"
+                            FontSize="13" >
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="Czas {0} - Cena {1}">
+                                            <Binding Path="StartTime" />
+                                            <Binding Path="Price" />
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:SearchViewModel}}, Path=ItemTapped}"		
+                                CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+            
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

@@ -16,6 +16,14 @@ namespace Projekt_Inzynierski
             Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
             Routing.RegisterRoute(nameof(TripDetailPage), typeof(TripDetailPage));
             Routing.RegisterRoute(nameof(UserPage), typeof(UserPage));
+            Routing.RegisterRoute(nameof(FriendlistPage), typeof(FriendlistPage));
+            Routing.RegisterRoute(nameof(UserDetailsPage), typeof(UserDetailsPage));
+            Routing.RegisterRoute(nameof(NewRidePage), typeof(NewRidePage));
+            Routing.RegisterRoute(nameof(MyCarsPage), typeof(MyCarsPage));
+            Routing.RegisterRoute(nameof(NewCarPage), typeof(NewCarPage));
+            Routing.RegisterRoute(nameof(AddOpinion), typeof(AddOpinion));
+            Routing.RegisterRoute(nameof(ChatPage), typeof(ChatPage));
+            Routing.RegisterRoute(nameof(AddMessagePage), typeof(AddMessagePage));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

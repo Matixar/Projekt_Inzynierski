@@ -1,24 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Projekt_Inzynierski.Views.NewRidePage">
+             x:Class="Projekt_Inzynierski.Views.NewRidePage"
+             Title="Dodaj przejazd"
+             xmlns:local="clr-namespace:Projekt_Inzynierski.ViewModels"  
+             xmlns:model="clr-namespace:OpenApiService"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:DataType="local:NewTripViewModel">
+
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Miejsce odjazdu" />
-            <Entry />
-            <Label Text="Miejsce przyjazdu" />
-            <Entry />
-            <Label Text="Czas odjazdu" />
-            <DatePicker />
-            <Label Text="Planowany czas przyjazdu" />
-            <DatePicker />
-            <Label Text="Samochód" />
-            <Entry />
-            <Label Text="Liczba wolnych miejsc" />
-            <Entry />
-            <Label Text="Cena za osobę" />
-            <Entry />
-            <Button Text="Dodaj przejazd" />
+            <maps:Map x:Name="StartFromMap" IsVisible="{Binding StartFromMapVisible}" IsShowingUser="True" VerticalOptions="FillAndExpand" MinimumHeightRequest="550" HeightRequest="1000">
+                <maps:Map.Behaviors>
+                    <xct:EventToCommandBehavior 
+                            EventName="MapClicked"
+                            Command="{Binding StartFromMapCommand}"
+                           />
+                </maps:Map.Behaviors>
+            </maps:Map>
+            <maps:Map x:Name="EndInMap" IsVisible="{Binding EndInMapVisible}" IsShowingUser="True" VerticalOptions="FillAndExpand" MinimumHeightRequest="550" HeightRequest="1000">
+                <maps:Map.Behaviors>
+                    <xct:EventToCommandBehavior 
+                            EventName="MapClicked"
+                            Command="{Binding EndInMapCommand}"
+                           />
+                </maps:Map.Behaviors>
+            </maps:Map>
+            <ScrollView>
+                <StackLayout Padding="10">
+                <Label Text="Miejsce odjazdu" />
+                <Button x:Name="ButtonStartFrom" Text="Wybierz miejsce" Command="{Binding StartFromButtonCommand}" />
+                <Entry Text="{Binding StartFrom}" IsEnabled="False"/>
+                <Label Text="Miejsce przyjazdu" />
+                <Button x:Name="ButtonEndIn" Text="Wybierz miejsce" Command="{Binding EndInButtonCommand}"/>
+                <Entry Text="{Binding EndIn}" IsEnabled="False"/>
+                <Label Text="Data odjazdu" />
+                <DatePicker Date="{Binding Date}"/>
+                <Label Text="Planowany czas odjazdu" />
+                <TimePicker Time="{Binding Time}"/>
+                <Label Text="Cena za osobę" />
+                <Entry Text="{Binding Price}" Keyboard="Numeric" />
+                <Picker 
+                x:Name="CarPicker"
+                Title="Wybierz pojazd" 
+                ItemsSource="{Binding CarList}"
+                SelectedItem="{Binding SelectedCar}">
+                        <Picker.ItemDisplayBinding>
+                            <MultiBinding StringFormat="{}{0} {1}">
+                                <Binding Path="Mark" />
+                                <Binding Path="Model" />
+                            </MultiBinding>
+                        </Picker.ItemDisplayBinding>
+                </Picker>
+                <Label Text="Ilość wolnych miejsc"/>
+                <Entry Text="{Binding EmptySeats}" Keyboard="Numeric"/>
+                <Button Text="Dodaj" Command="{Binding SaveCommand}"/>
+            </StackLayout>
+            </ScrollView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

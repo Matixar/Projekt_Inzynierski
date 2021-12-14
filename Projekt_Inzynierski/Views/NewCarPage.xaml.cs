@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Projekt_Inzynierski.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,8 @@ namespace Projekt_Inzynierski.Views
         public NewCarPage()
         {
             InitializeComponent();
+
+            BindingContext = new NewCarViewModel();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using OpenApiService;
+﻿using Newtonsoft.Json;
+using OpenApiService;
+using Projekt_Inzynierski.Models;
 using Projekt_Inzynierski.Views;
 using System;
 using System.Collections.Generic;
@@ -23,7 +25,7 @@ namespace Projekt_Inzynierski.ViewModels
         private async void OnLoginClicked(object obj)
         {
             // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
-            var client = new OpenApiService.OpenApiService("https://travelapp-api.azurewebsites.net/", new System.Net.Http.HttpClient());
+            var client = new OpenApiService.OpenApiService("https://travelapi-app.azurewebsites.net/", new System.Net.Http.HttpClient());
             var login = new LoginDto
             {
                 Email = Email,
@@ -31,13 +33,16 @@ namespace Projekt_Inzynierski.ViewModels
             };
             try
             {
+                
                 var result = await client.LoginAsync(login);
+                await Xamarin.Essentials.SecureStorage.SetAsync("hashcode", result.UserHash.ToString());
+                await Xamarin.Essentials.SecureStorage.SetAsync("token", result.Token);
                 await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
             }
 
             catch(ApiException e)
             {
-                await Shell.Current.DisplayAlert("Błąd", e.Response, "OK");
+                await Shell.Current.DisplayAlert("Błąd", JsonConvert.DeserializeObject<ErrorResponse>(e.Response).error, "OK");
             }
         }
     }

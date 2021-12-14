@@ -1,6 +1,8 @@
-﻿using System;
+﻿using OpenApiService;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
 
 namespace Projekt_Inzynierski.ViewModels
 {
@@ -8,6 +10,7 @@ namespace Projekt_Inzynierski.ViewModels
     {
         private string email;
         private string password;
+        private string name;
 
         private bool emailValid;
         private bool passwordEmptyValid;
@@ -50,6 +53,17 @@ namespace Projekt_Inzynierski.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public string Name
+        {
+            get => name;
+            set
+            {
+                name = value;
+                OnPropertyChanged();
+            }
+        }
+    
 
         public string Email { get => email; set => SetProperty(ref email, value); }
         public string Password { get => password; set => SetProperty(ref password, value); }

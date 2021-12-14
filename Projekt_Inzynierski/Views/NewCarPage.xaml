@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Projekt_Inzynierski.Views.NewCarPage">
+             x:Class="Projekt_Inzynierski.Views.NewCarPage"
+             Title="Dodaj pojazd"
+             xmlns:local="clr-namespace:Projekt_Inzynierski.ViewModels"  
+             xmlns:model="clr-namespace:OpenApiService"
+             x:DataType="local:NewCarViewModel">
     <ContentPage.Content>
         <StackLayout Padding="10">
             <Label Text="Marka pojazdu"/>
@@ -9,11 +13,13 @@
             <Label Text="Model pojazdu" />
             <Entry Text="{Binding Model}"/>
             <Label Text="Nr rejestracyjny" />
-            <Entry Text="{Binding Plate}"/>
+            <Entry Text="{Binding RegistrationNumber}"/>
             <Label Text="Kolor" />
             <Entry Text="{Binding Color}"/>
+            <Label Text="Rok produkcji" />
+            <Entry Keyboard="Numeric" Text="{Binding ProductionYear}"/>
             <Label Text="Liczba miejsc" />
-            <Entry Text="{Binding Seats}"/>
+            <Entry Keyboard="Numeric" Text="{Binding NumberOfSeats}"/>
             <StackLayout Orientation="Horizontal">
                 <Button Text="Anuluj" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
                 <Button Text="Dodaj pojazd" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>

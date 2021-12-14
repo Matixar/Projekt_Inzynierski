@@ -1,4 +1,6 @@
-﻿using Projekt_Inzynierski.Models;
+﻿using Newtonsoft.Json;
+using Projekt_Inzynierski.Models;
+using Projekt_Inzynierski.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,22 +12,24 @@ namespace Projekt_Inzynierski.ViewModels
     [QueryProperty(nameof(ItemId), nameof(ItemId))]
     public class TripDetailViewModel : BaseViewModel
     {
-        private string itemId;
-        private string departurePlace;
+        private int itemId;
+        private string startFrom;
         private string destinationPlace;
         private string driver;
-        private List<User> passengers;
-        private DateTime departureTime;
+        private ICollection<OpenApiService.MemberDto> passengers;
+        private OpenApiService.MemberDto passenger;
+        private DateTimeOffset departureTime;
         private DateTime destinationTime;
         private int avalibleSeats;
         private string distance;
         private string car;
         private string tripPrice;
-        public string Id { get; set; }
-        public string DeparturePlace
+        private OpenApiService.MemberDto owner;
+        public int Id { get; set; }
+        public string StartFrom
         {
-            get => departurePlace;
-            set => SetProperty(ref departurePlace, value);
+            get => startFrom;
+            set => SetProperty(ref startFrom, value);
         }
         public string DestinationPlace
         {
@@ -39,18 +43,25 @@ namespace Projekt_Inzynierski.ViewModels
             set => SetProperty(ref driver, value);
         }
 
-        public List<User> Passengers
+        public ICollection<OpenApiService.MemberDto> Passengers
         {
             get => passengers;
             set => SetProperty(ref passengers, value);
         }
-        public DateTime DepartureTime
+        public DateTimeOffset DepartureTime
         {
             get => departureTime;
             set => SetProperty(ref departureTime, value);
         }
 
-        public string ItemId
+        public TripDetailViewModel()
+        {
+            JoinTripCommand = new Command(JoinTrip);
+            OpenChatCommand = new Command(OpenChat);
+            DeleteCommand = new Command(DeleteTrip);
+        }
+
+        public int ItemId
         {
             get
             {
@@ -63,33 +74,118 @@ namespace Projekt_Inzynierski.ViewModels
             }
         }
 
+        private async void JoinTrip()
+        {
+            try
+            {
+                System.Net.Http.HttpClient _client = new System.Net.Http.HttpClient();
+                _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", await Xamarin.Essentials.SecureStorage.GetAsync("token"));
+                var client = new OpenApiService.OpenApiService("https://travelapi-app.azurewebsites.net/", _client);
+                var user = await client.UserAsync(await Xamarin.Essentials.SecureStorage.GetAsync("hashcode"));
+                var join = await client.AddPassengerAsync(new OpenApiService.PassengerDto()
+                {
+                    TripId = ItemId,
+                    UserId = user.Id
+                });
+                await Shell.Current.DisplayAlert("Potwierdzenie", "Dołączyłeś do przejazdu", "ok");
+            }
+            catch(OpenApiService.ApiException e)
+            {
+                await Shell.Current.DisplayAlert("Błąd", JsonConvert.DeserializeObject<ErrorResponse>(e.Response).error, "OK");
+            }
+        }
+
+        private async void OpenChat()
+        {
+            await Shell.Current.GoToAsync($"{nameof(ChatPage)}?{nameof(ChatViewModel.TripId)}={itemId}");
+        }
+
+        public Command JoinTripCommand { get; }
+
+        public Command DeleteCommand { get; }
+
+        public Command OpenChatCommand { get; }
+
         public DateTime DestinationTime { get => destinationTime; set => SetProperty(ref destinationTime, value); }
         public int AvalibleSeats { get => avalibleSeats; set => SetProperty(ref avalibleSeats, value); }
         public string Distance { get => distance; set => SetProperty(ref distance, value); }
         public string Car { get => car; set => SetProperty(ref car, value); }
         public string TripPrice { get => tripPrice; set => SetProperty(ref tripPrice, value); }
+        public OpenApiService.MemberDto Passenger { get => passenger; set => passenger = value; }
+        public OpenApiService.MemberDto Owner { get => owner; set => owner = value; }
 
-        public async void LoadItemId(string itemId)
+        public async void LoadItemId(int itemId)
         {
             try
             {
-                var item = await DataStoreTrip.GetItemAsync(itemId);
-                Id = item.Id;
-                DeparturePlace = item.DeparturePlace;
-                DepartureTime = item.DepartureTime;
-                DestinationPlace = item.DestinationPlace;
-                DestinationTime = item.DestinationTime;
-                AvalibleSeats = item.AvalibleSeats;
-                Distance = item.Distance.ToString() + "km";
-                Car = item.Car.Brand + " " + item.Car.Model;
-                TripPrice = item.TripPrice.ToString() + "zł";
-                Driver = item.Driver.Name;
-                Passengers = item.Passengers;
+                System.Net.Http.HttpClient _client = new System.Net.Http.HttpClient();
+                _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", await Xamarin.Essentials.SecureStorage.GetAsync("token"));
+                var client = new OpenApiService.OpenApiService("https://travelapi-app.azurewebsites.net/", _client);
+                var trip = await client.TripsAsync(itemId);
+                
+                Id = trip.Id;
+                StartFrom = trip.StartFrom;
+                DepartureTime = trip.StartTime;
+                DestinationPlace = trip.EndIn;
+                TripPrice = trip.Price + "zł";
+                Owner = trip.Creator;
+                Driver = trip.Creator.Name + " #" + trip.Creator.UserHash;
+                Passengers = trip.Passenger;
+                AvalibleSeats = trip.NumberOfSeats;
+                Car = trip.Car.Mark + " " + trip.Car.Model + " rok " +trip.Car.ProductionYear + " (" + trip.Car.Color + ")" + "\nNr rejestracji: " + trip.Car.RegistrationNumber;
                 
             }
-            catch (Exception)
+            catch (OpenApiService.ApiException e)
             {
-                Debug.WriteLine("Failed to Load Item");
+                await Shell.Current.DisplayAlert("Błąd",e.StatusCode + e.Message,"OK");
+            }
+        }
+
+        private async void DeleteTrip()
+        {
+            try
+            {
+                System.Net.Http.HttpClient _client = new System.Net.Http.HttpClient();
+                _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", await Xamarin.Essentials.SecureStorage.GetAsync("token"));
+                var client = new OpenApiService.OpenApiService("https://travelapi-app.azurewebsites.net/", _client);
+                var hash = await Xamarin.Essentials.SecureStorage.GetAsync("hashcode");
+                var user = await client.UserAsync(hash);
+                List<OpenApiService.MemberDto> pass = new List<OpenApiService.MemberDto>(Passengers);
+                var pas = pass.Find(x => (x.UserHash.ToString() == hash));
+                if (Owner.UserHash.ToString() == hash)
+                {
+                    var result = await Shell.Current.DisplayAlert("Usunięcie przejazdu", "Czy chcesz usunąć przejazd?", "TAK", "NIE");
+                    if (result) 
+                    {
+                        await client.DeleteTripAsync(Id);
+                        await Shell.Current.DisplayAlert("Potwierdzenie", "Usunięto przejazd", "OK");
+                    }
+                }
+                else if (pas != null)
+                {
+                    var result = await Shell.Current.DisplayAlert("Anuluj przejazd", "Czy chcesz anulować dołączenie do przejazdu?", "TAK", "NIE");
+                    if (result)
+                    {
+                        await client.DeletePassengerAsync(new OpenApiService.PassengerDto()
+                        {
+                            UserId = user.Id,
+                            TripId = Id
+                        });
+                        await Shell.Current.DisplayAlert("Potwierdzenie", "Odłączono od przejazdu", "OK");
+                    }
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("Ostrzeżenie", "Nie jesteś kierowcą/pasażerem przejazdu", "OK");
+                }
+            }
+            catch(OpenApiService.ApiException e)
+            {
+                if(e.StatusCode != 200)
+                    await Shell.Current.DisplayAlert("Błąd", e.Message, "ok");
+                else
+                    await Shell.Current.DisplayAlert("Potwierdzenie", "Usunięto", "OK");
+
             }
         }
     }

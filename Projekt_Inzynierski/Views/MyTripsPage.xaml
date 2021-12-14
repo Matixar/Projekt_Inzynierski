@@ -4,7 +4,7 @@
              x:Class="Projekt_Inzynierski.Views.MyTripsPage"
              Title="{Binding Title}"
              xmlns:local="clr-namespace:Projekt_Inzynierski.ViewModels"  
-             xmlns:model="clr-namespace:Projekt_Inzynierski.Models"
+             xmlns:model="clr-namespace:OpenApiService"
              
              >
     <ContentPage.ToolbarItems>
@@ -21,15 +21,24 @@
                 SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Padding="10" x:DataType="model:Trip">
+                    <StackLayout Padding="10" x:DataType="model:TripInfoDto">
                         <Label 
                             LineBreakMode="NoWrap" 
                             Style="{DynamicResource ListItemTextStyle}" 
                             FontSize="16" >
                             <Label.Text>
-                                <MultiBinding StringFormat="Z {0} do {1}">
-                                    <Binding Path="DeparturePlace" />
-                                    <Binding Path="DestinationPlace" />
+                                <MultiBinding StringFormat="Z {0}">
+                                    <Binding Path="StartFrom" />
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+                        <Label 
+                            LineBreakMode="NoWrap" 
+                            Style="{DynamicResource ListItemTextStyle}" 
+                            FontSize="16" >
+                            <Label.Text>
+                                <MultiBinding StringFormat="Do {0}">
+                                    <Binding Path="EndIn" />
                                 </MultiBinding>
                             </Label.Text>
                         </Label>
@@ -38,9 +47,9 @@
                             Style="{DynamicResource ListItemDetailTextStyle}"
                             FontSize="13" >
                             <Label.Text>
-                                <MultiBinding StringFormat="Czas {0} - {1}">
-                                    <Binding Path="DepartureTime" />
-                                    <Binding Path="DestinationTime" />
+                                <MultiBinding StringFormat="Czas {0} - Cena {1}">
+                                    <Binding Path="StartTime" />
+                                    <Binding Path="Price" />
                                 </MultiBinding>
                             </Label.Text>
                         </Label>

@@ -3,29 +3,44 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:Projekt_Inzynierski.ViewModels" x:DataType="viewmodels:TripDetailViewModel"
              x:Class="Projekt_Inzynierski.Views.TripDetailPage"
              Title="Szczegóły przejazdu">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Czat" Command="{Binding OpenChatCommand}" />
+        <ToolbarItem Text="Usuń" Command="{Binding DeleteCommand}" />
+    </ContentPage.ToolbarItems>
+
     <ScrollView>
         <StackLayout Spacing="20" Padding="15">
-        
+        <Button Text="Dołącz do przejazdu"  Command="{Binding JoinTripCommand}"/>
         <Label Text="Miejsce początkowe:" FontSize="Medium" />
-        <Label Text="{Binding DeparturePlace}" FontSize="Small"/>
+        <Label Text="{Binding StartFrom}" FontSize="Small"/>
         <Label Text="Miejsce docelowe:" FontSize="Medium" />
         <Label Text="{Binding DestinationPlace}" FontSize="Small"/>
         <Label Text="Data odjazdu:" FontSize="Medium" />
         <Label Text="{Binding DepartureTime}" FontSize="Small"/>
-        <Label Text="Data przyjazdu:" FontSize="Medium" />
-        <Label Text="{Binding DestinationTime}" FontSize="Small"/>
         <Label Text="Kierowca:" FontSize="Medium" />
         <Label Text="{Binding Driver}" FontSize="Small"/>
         <Label Text="Pasażerowie:" FontSize="Medium" />
-        <Label Text="{Binding Passengers}" FontSize="Small"/>
+            <ListView ItemsSource="{Binding Passengers}" HeightRequest="150">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell>
+                            <TextCell.Text>
+                                <MultiBinding StringFormat="Pasażer: {0} {1}">
+                                    <Binding Path="Name" />
+                                    <Binding Path="UserHash" />
+                                </MultiBinding>
+                            </TextCell.Text>
+                        </TextCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         <Label Text="Samochód:" FontSize="Medium" />
         <Label Text="{Binding Car}" FontSize="Small"/>
         <Label Text="Wolne miejsca:" FontSize="Medium" />
         <Label Text="{Binding AvalibleSeats}" FontSize="Small"/>
-        <Label Text="Długość trasy:" FontSize="Medium" />
-        <Label Text="{Binding Distance}" FontSize="Small"/>
         <Label Text="Cena przejazdu:" FontSize="Medium" />
         <Label Text="{Binding TripPrice}" FontSize="Small"/>
-    </StackLayout>
+        </StackLayout>
     </ScrollView>
 </ContentPage>
