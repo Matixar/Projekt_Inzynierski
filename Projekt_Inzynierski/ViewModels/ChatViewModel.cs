@@ -1,4 +1,6 @@
-﻿using OpenApiService;
+﻿using Newtonsoft.Json;
+using OpenApiService;
+using Projekt_Inzynierski.Models;
 using Projekt_Inzynierski.Views;
 using System;
 using System.Collections.Generic;
@@ -46,9 +48,9 @@ namespace Projekt_Inzynierski.ViewModels
                     Items.Add(item);
                 }
             }
-            catch (Exception ex)
+            catch (ApiException ex)
             {
-                await Shell.Current.DisplayAlert("Błąd", ex.Message, "OK");
+                await Shell.Current.DisplayAlert("Błąd", JsonConvert.DeserializeObject<ErrorResponse>(ex.Response).error, "OK");
             }
             finally
             {

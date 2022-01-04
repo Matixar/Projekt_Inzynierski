@@ -15,18 +15,21 @@
                 <Label Text="Opis" FontSize="Medium"/>
                 <Label Text="{Binding User.Description}" />
                 <Label Text="Opinie" FontSize="Medium"/>
-                <ListView ItemsSource="{Binding User.Opinions}" HeightRequest="150">
+                <ListView ItemsSource="{Binding User.Opinions}" HeightRequest="150" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <TextCell>
                                 <TextCell.Text>
-                                    <MultiBinding StringFormat="Od: {0} : ( {1} ) \n {2} \n {3}">
-                                        <Binding Path="SenderId" />
+                                    <MultiBinding StringFormat="Ocena: ({0}) Data: {1}">
                                         <Binding Path="OpinionValue" />
                                         <Binding Path="Date" />
-                                        <Binding Path="OpinionDescription" />
                                     </MultiBinding>
                                 </TextCell.Text>
+                                <TextCell.Detail>
+                                    <MultiBinding StringFormat="Treść: {0}">
+                                        <Binding Path="OpinionDescription" />
+                                    </MultiBinding>
+                                </TextCell.Detail>
                             </TextCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>

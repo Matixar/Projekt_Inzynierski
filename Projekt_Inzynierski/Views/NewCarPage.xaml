@@ -4,18 +4,46 @@
              x:Class="Projekt_Inzynierski.Views.NewCarPage"
              Title="Dodaj pojazd"
              xmlns:local="clr-namespace:Projekt_Inzynierski.ViewModels"  
-             xmlns:model="clr-namespace:OpenApiService"
+             xmlns:model="clr-namespace:OpenApiService" xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:DataType="local:NewCarViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
+            <Style TargetType="Entry" x:Key="invalidInput">
+                <Setter Property="TextColor" Value="Red"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Padding="10">
             <Label Text="Marka pojazdu"/>
-            <Entry Text="{Binding Mark}"/>
+            <Entry Text="{Binding Mark}">
+                <Entry.Behaviors>
+                    <xct:TextValidationBehavior Flags="ValidateOnUnfocusing" RegexPattern="^[A-Z].*" InvalidStyle="{StaticResource invalidInput}" MinimumLength="1" IsValid="{Binding MarkValid}"/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label x:Name="LabelValidMark" Text="Nieprawidłowa marka" FontSize="Small" TextColor="Red" IsVisible="{Binding MarkValid, Converter={StaticResource InvertedBoolConverter}}"/>
             <Label Text="Model pojazdu" />
-            <Entry Text="{Binding Model}"/>
+            <Entry Text="{Binding Model}">
+            <Entry.Behaviors>
+                <xct:TextValidationBehavior Flags="ValidateOnUnfocusing" InvalidStyle="{StaticResource invalidInput}" MinimumLength="1" IsValid="{Binding ModelValid}"/>
+            </Entry.Behaviors>
+            </Entry>
+            <Label x:Name="LabelValidModel" Text="Nieprawidłowy model" FontSize="Small" TextColor="Red" IsVisible="{Binding ModelValid, Converter={StaticResource InvertedBoolConverter}}"/>
             <Label Text="Nr rejestracyjny" />
-            <Entry Text="{Binding RegistrationNumber}"/>
+            <Entry Text="{Binding RegistrationNumber}">
+                <Entry.Behaviors>
+                    <xct:TextValidationBehavior Flags="ValidateOnUnfocusing" InvalidStyle="{StaticResource invalidInput}" MinimumLength="3" IsValid="{Binding RegValid}"/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label x:Name="LabelValidRegNum" Text="Nieprawidłowy numer rejestracyjny" FontSize="Small" TextColor="Red" IsVisible="{Binding RegValid, Converter={StaticResource InvertedBoolConverter}}"/>
             <Label Text="Kolor" />
-            <Entry Text="{Binding Color}"/>
+            <Entry Text="{Binding Color}">
+                <Entry.Behaviors>
+                    <xct:TextValidationBehavior Flags="ValidateOnUnfocusing" RegexPattern="^[A-Z].*" InvalidStyle="{StaticResource invalidInput}" MinimumLength="1" IsValid="{Binding ColorValid}"/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label x:Name="LabelValidColor" Text="Nieprawidłowy kolor" FontSize="Small" TextColor="Red" IsVisible="{Binding ColorValid, Converter={StaticResource InvertedBoolConverter}}"/>
             <Label Text="Rok produkcji" />
             <Entry Keyboard="Numeric" Text="{Binding ProductionYear}"/>
             <Label Text="Liczba miejsc" />

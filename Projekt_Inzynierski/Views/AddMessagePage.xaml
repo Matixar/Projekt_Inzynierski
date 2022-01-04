@@ -4,9 +4,9 @@
              x:Class="Projekt_Inzynierski.Views.AddMessagePage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Komentarz"/>
+            <Label Text="Wiadomość:"/>
             <Editor Text="{Binding Message}" AutoSize="TextChanges" />
-            <Button Text="Dodaj komentarz" Command="{Binding AddMessageCommand}"/>
+            <Button Text="Dodaj wiadomość" Command="{Binding AddMessageCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

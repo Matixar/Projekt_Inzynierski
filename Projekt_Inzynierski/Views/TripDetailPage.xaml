@@ -12,6 +12,7 @@
     <ScrollView>
         <StackLayout Spacing="20" Padding="15">
         <Button Text="Dołącz do przejazdu"  Command="{Binding JoinTripCommand}"/>
+        <Button Text="Sprawdź trasę" Command="{Binding CheckTripRoute}" />
         <Label Text="Miejsce początkowe:" FontSize="Medium" />
         <Label Text="{Binding StartFrom}" FontSize="Small"/>
         <Label Text="Miejsce docelowe:" FontSize="Medium" />

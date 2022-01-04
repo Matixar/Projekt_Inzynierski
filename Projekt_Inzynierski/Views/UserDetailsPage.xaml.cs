@@ -19,6 +19,12 @@ namespace Projekt_Inzynierski.Views
             InitializeComponent();
             BindingContext = new UserDetailsViewModel();
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            Shell.Current.GoToAsync($"//{nameof(FriendlistPage)}");
+            return true;
+        }
     }
 
 }

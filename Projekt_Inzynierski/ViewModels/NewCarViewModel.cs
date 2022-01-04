@@ -20,6 +20,16 @@ namespace Projekt_Inzynierski.ViewModels
 
         private int productionYear;
 
+        private bool markValid;
+
+        private bool modelValid;
+
+        private bool regValid;
+
+        private bool colorValid;
+
+
+
         public string Mark { get => mark; set => mark = value; }
         public string Model { get => model; set => model = value; }
         public string RegistrationNumber { get => registrationNumber; set => registrationNumber = value; }
@@ -35,7 +45,11 @@ namespace Projekt_Inzynierski.ViewModels
         public Command SaveCommand { get; }
 
         public Command CancelCommand { get; }
-        public int ProductionYear { get => productionYear; set => productionYear = value; }
+        public int ProductionYear { get => productionYear; set { productionYear = value; OnPropertyChanged(); } }
+        public bool MarkValid { get => markValid; set { markValid = value; OnPropertyChanged(); } }
+        public bool ModelValid { get => modelValid; set { modelValid = value; OnPropertyChanged(); } }
+        public bool RegValid { get => regValid; set { regValid = value; OnPropertyChanged(); } }
+        public bool ColorValid { get => colorValid; set { colorValid = value; OnPropertyChanged(); } }
 
         private async void Cancel()
         {
@@ -43,6 +57,7 @@ namespace Projekt_Inzynierski.ViewModels
         }
         private async void AddNewCar()
         {
+            if(MarkValid && ModelValid && RegValid && ColorValid)
             try
             {
                 System.Net.Http.HttpClient _client = new System.Net.Http.HttpClient();
@@ -65,6 +80,8 @@ namespace Projekt_Inzynierski.ViewModels
             {
                 await Shell.Current.DisplayAlert("Błąd", e.StatusCode.ToString() + " " + e.Message, "OK");
             }
+            else
+                await AppShell.Current.DisplayAlert("Błąd", "Wpisz poprawne dane", "OK");
         }
 
     }

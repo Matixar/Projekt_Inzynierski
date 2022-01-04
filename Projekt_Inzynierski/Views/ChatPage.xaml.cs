@@ -13,10 +13,17 @@ namespace Projekt_Inzynierski.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ChatPage : ContentPage
     {
+        ChatViewModel _viewModel;
         public ChatPage()
         {
             InitializeComponent();
-            BindingContext = new ChatViewModel();
+            BindingContext = _viewModel = new ChatViewModel();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            _viewModel.OnAppearing();
         }
     }
 }

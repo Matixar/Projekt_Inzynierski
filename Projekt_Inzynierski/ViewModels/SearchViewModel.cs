@@ -42,6 +42,7 @@ namespace Projekt_Inzynierski.ViewModels
 
         private async void OnSearch()
         {
+            if(StartFrom != null && EndIn != null)
             try
             {
                 Items.Clear();
@@ -62,6 +63,8 @@ namespace Projekt_Inzynierski.ViewModels
             {
                 await Shell.Current.DisplayAlert("Błąd", e.StatusCode + e.Message, "OK");
             }
+            else
+                await Shell.Current.DisplayAlert("Ostrzeżenie", "Podaj miejsce odjazdu i przyjazdu", "OK");
 
 
         }

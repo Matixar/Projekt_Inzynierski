@@ -48,7 +48,8 @@ namespace Projekt_Inzynierski.ViewModels
             }
             catch (OpenApiService.ApiException e)
             {
-                await Shell.Current.DisplayAlert("Błąd", e.Response + e.StatusCode + e.Message, "OK");
+                if(e.StatusCode != 200)
+                    await Shell.Current.DisplayAlert("Błąd", e.Response + e.StatusCode + e.Message, "OK");
             }
             finally
             {

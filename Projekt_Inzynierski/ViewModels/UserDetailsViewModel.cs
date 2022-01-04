@@ -28,7 +28,7 @@ namespace Projekt_Inzynierski.ViewModels
 
         public async void AddOpinions()
         {
-            await Shell.Current.GoToAsync($"{nameof(AddOpinion)}?{nameof(AddOpinionViewModel.UserId)}={Id}");
+            await Shell.Current.GoToAsync($"{nameof(AddOpinion)}?{nameof(AddOpinionViewModel.UserId)}={Id}&{nameof(AddOpinionViewModel.UserHash)}={UserId}");
         }
 
         public Command AddOpinionCommand { get; }
@@ -54,7 +54,6 @@ namespace Projekt_Inzynierski.ViewModels
                 System.Net.Http.HttpClient _client = new System.Net.Http.HttpClient();
                 _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", await Xamarin.Essentials.SecureStorage.GetAsync("token"));
                 var client = new OpenApiService.OpenApiService("https://travelapi-app.azurewebsites.net/", _client);
-                var user = client.GetHashCode();
                 
                 User = await client.UserAsync(UserId.ToString());
                 Id = User.Id;

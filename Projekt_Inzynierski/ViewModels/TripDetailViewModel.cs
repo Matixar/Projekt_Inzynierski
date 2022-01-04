@@ -4,8 +4,11 @@ using Projekt_Inzynierski.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
+using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.Maps;
 
 namespace Projekt_Inzynierski.ViewModels
 {
@@ -59,6 +62,7 @@ namespace Projekt_Inzynierski.ViewModels
             JoinTripCommand = new Command(JoinTrip);
             OpenChatCommand = new Command(OpenChat);
             DeleteCommand = new Command(DeleteTrip);
+            CheckTripRoute = new Command(CheckRoute);
         }
 
         public int ItemId
@@ -100,11 +104,42 @@ namespace Projekt_Inzynierski.ViewModels
             await Shell.Current.GoToAsync($"{nameof(ChatPage)}?{nameof(ChatViewModel.TripId)}={itemId}");
         }
 
+        private async void CheckRoute()
+        {
+            
+            var destinationPlaceUri = DestinationPlace.Replace(" ", "+").Replace(",","%2C").Replace("-","%2D");
+            var startFromUri = StartFrom.Replace(" ", "+").Replace(",", "%2C").Replace("-", "%2D");
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+                await Launcher.OpenAsync("http://maps.apple.com/?daddr=" + destinationPlaceUri +",+saddr=" + startFromUri);
+            }
+            else if (Device.RuntimePlatform == Device.Android)
+            {
+                await Launcher.OpenAsync("http://maps.google.com/?daddr=" + destinationPlaceUri + ",+CA&saddr=" + startFromUri);
+            }
+        }
+
+        private string ConvertStringToAscii(string text)
+        {
+            var sb = new StringBuilder();
+            foreach (char c in text)
+            {
+                int unicode = c;
+                if (unicode < 128)
+                {
+                    sb.Append(c);
+                }
+            }
+            return sb.ToString();
+        }
+
         public Command JoinTripCommand { get; }
 
         public Command DeleteCommand { get; }
 
         public Command OpenChatCommand { get; }
+
+        public Command CheckTripRoute { get; }
 
         public DateTime DestinationTime { get => destinationTime; set => SetProperty(ref destinationTime, value); }
         public int AvalibleSeats { get => avalibleSeats; set => SetProperty(ref avalibleSeats, value); }
